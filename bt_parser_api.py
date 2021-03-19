@@ -117,7 +117,7 @@ for date in date_list:
     print(date)
     json_list = []
     for key, value in bus_dict.items():
-        json_list += post_ajax(bt_cities[city].strip('/'), bus_id=key, date=date).json()
+        json_list += post_ajax(bt_cities[city].strip('/'), bus_id=key, date=date).json()  # ОШИБКУ ВЫДАЁТ НА ЭТОЙ СТРОКЕ
         print(key)
     for point in json_list:
         features.append(geojsonize(point, date))
