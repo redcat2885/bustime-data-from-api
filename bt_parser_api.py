@@ -64,11 +64,11 @@ def geojsonize(json: dict, date: str):
                                 "timestamp": json['timestamp'],
                                 "date": date,
                                 "bus_id": json["bus_id"],
-                                # "route_id": bus_dict[str(json["bus_id"])],  КИРИЛЛИЦА
+                                "route_id": bus_dict[str(json["bus_id"])],
                                 "heading": json["heading"],
                                 "speed": json["speed"],
                                 "direction": json["direction"],
-                                # "gosnum": json["gosnum"],  КИРИЛЛИЦА
+                                "gosnum": json["gosnum"],
                                 "bortnum": json["bortnum"]})
     return point
 
@@ -111,6 +111,9 @@ city_html = get_html(CITY_URL)
 print(CITY_URL)
 
 bus_dict = get_bus_list(city_html.text)
+bus_dict.pop('0')
+bus_dict.pop('search_gn')
+bus_dict.pop('search_bn')
 print(bus_dict)
 
 for date in date_list:
@@ -124,6 +127,6 @@ for date in date_list:
 
 feature_collection = [FeatureCollection(features)]
 
-with open(bt_cities[city].strip('/') + '_' + date_span + '.geojson',
+with open(bt_cities[city].strip('/') + '_' + str(date_span) + '.geojson',
           'w', encoding='utf-8') as f:
     dump(feature_collection[0], f, ensure_ascii=False)
